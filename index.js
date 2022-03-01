@@ -1,10 +1,8 @@
-
 const { prompt } = require("inquirer");
-// const { allowedNodeEnvironmentFlags } = require("process");
-// const { load } = require("signal-exit");
-
+const data = require("./db");
 require("console.table");
 
+init();
 
 function init() {
     loadPrompts();
@@ -22,28 +20,12 @@ function loadPrompts() {
                     value: "VIEW_EMPLOYEES"
                 },
                 {
-                    name: "View All Employees By Department",
-                    value: "VIEW_EMPLOYEES_BY_DEPARTMENT"
-                },
-                {
-                    name: "View All Employees By Manager",
-                    value: "VIEW_EMPLOYEES_BY_MANAGER"
-                },
-                {
                     name: "Add Employee",
                     value: "ADD_EMPLOYEE"
                 },
                 {
-                    name: "Remove Employee",
-                    value: "REMOVE_EMPLOYEE"
-                },
-                {
                     name: "Update Employee Role",
                     value: "UPDATE_EMPLOYEE_ROLE"
-                },
-                {
-                    name: "Update Employee Manager",
-                    value: "UPDATE_EMPLOYEE_MANAGER"
                 },
                 {
                     name: "View All Roles",
@@ -54,20 +36,12 @@ function loadPrompts() {
                     value: "ADD_ROLE"
                 },
                 {
-                    name: "Remove Role",
-                    value: "REMOVE_ROLE"
-                },
-                {
                     name: "View All Departments",
                     value: "VIEW_DEPARTMENT"
                 },
                 {
                     name: "Add Department",
                     value: "ADD_DEPARTMENT"
-                },
-                {
-                    name: "Remove Department",
-                    value: "REMOVE_DEPARTMENT"
                 },
                 {
                     name: "View Total Utilized Budget By Department",
@@ -80,29 +54,17 @@ function loadPrompts() {
             ]
         }
     ]).then(res => {
-        let selection = res.selection;
+        let choice = res.choice;
 
-        switch (selection) {
+        switch (choice) {
             case "VIEW_EMPLOYEES":
                 viewEmployees();
-                break;
-            case "VIEW_EMPLOYEES_BY_DEPARTMENT":
-                viewEmployeesByDept();
-                break;
-            case "VIEW_EMPLOYEES_BY_MANAGER":
-                viewEmployeesByManager();
                 break;
             case "ADD_EMPLOYEE":
                 addEmployee();
                 break;
-            case "Remove_Employee":
-                removeEmployee();
-                break;
             case "UPDATE_EMPLOYEE_ROLE":
                 updateEmployeeRole();
-                break;
-            case "UPDATE_EMPLOYEE_MANAGER":
-                updateEmployeeManager();
                 break;
             case "VIEW_ROLES":
                 viewRoles();
@@ -110,17 +72,11 @@ function loadPrompts() {
             case "ADD_ROLE":
                 addRole();
                 break;
-            case "REMOVE_ROLE":
-                removeRole();
-                break;
             case "VIEW_DEPARTMENTS":
                 viewDepartments();
                 break;
             case "ADD_DEPARTMENT":
                 addDepartment();
-                break;
-            case "REMOVE_DEPARTMENT":
-                removeDepartment();
                 break;
             case "VIEW_UTILIZED_BUDGET_BY_DEPARTMENT":
                 viewUtilizedBudgetByDept();
@@ -131,4 +87,41 @@ function loadPrompts() {
     })
 }
 
-init();
+function viewEmployees() {
+    data.findAllEmployees();
+}
+
+function addEmployee() {
+
+    prompt([
+        {
+            type: "input",
+            name: "firstName",
+            message: "What is the employee's first name?"
+        },
+        {
+            type: "input",
+            name: "lastName",
+            message: "What is the employee's last name?"
+        },
+        {
+            type: "input",
+            name: "role",
+            message: "What is the employee's role"
+        },
+        {
+            type: "input",
+            name: "role",
+            message: "Who is the employee's manager?"
+        }
+    ]).then(res => {
+        
+    })
+
+    data.createEmployee();
+}
+
+
+
+
+

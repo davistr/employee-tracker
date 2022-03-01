@@ -7,9 +7,9 @@ class Data {
         this.connection = connection;
     }
 
-    findAllEmployess() {
+    findAllEmployees() {
         return this.connection.promise().query(
-            "SELECT employee.id, employee.first_name, employee.last_name, job_role.title, department.name AS department, job_role.salary, 
+            "SELECT employee.id, employee.first_name, employee.last_name, job_role.title, department.department_name AS department, job_role.salary AS salary, employee.manager_id FROM employee LEFT JOIN job_role ON employee.role_id = job_role.id LEFT JOIN department ON job_role.department_id = department.id"
         );
     }
 
@@ -34,23 +34,6 @@ class Data {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+module.exports = new Data(connection);
