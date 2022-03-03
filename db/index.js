@@ -26,7 +26,11 @@ class Data {
     }
 
     findAllRoles() {
-        return this.connection.promise().query("SELECT job_role.id, job_role.title, department.name AS department, role.salary FROM role LEFT JOIN department on role")
+        return this.connection.promise().query("SELECT job_role.id, job_role.title, department.department_name AS department, job_role.salary FROM job_role LEFT JOIN department on job_role.department_id = department.id");
+    }
+
+    findAllDepartments() {
+        return this.connection.promise().query("SELECT department_name FROM department");
     }
 
     createRole(role) {

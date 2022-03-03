@@ -1,19 +1,33 @@
-const { prompt } = require("inquirer");
+const inquirer = require("inquirer");
 const data = require("./db");
 require("console.table");
 
-init();
+
+const logo = require('asciiart-logo');
+const connection = require('./db/connection');
+connection.connect(err => {
+    if (err) throw err
+    init();
+});
+
 
 function init() {
+    const logoText = logo ({
+        name: "Employee Manager",
+        borderColor: "grey",
+        logoColor: "blue"
+    }).render();
+    console.log(logoText);
+
     loadPrompts();
 }
 
 function loadPrompts() {
-    prompt([
+    inquirer.prompt([
         {
             type: "list",
             name: "choice",
-            message: "What would you like to do",
+            message: "What would you like to do?",
             choices: [
                 {
                     name: "View All Employees",
@@ -37,7 +51,7 @@ function loadPrompts() {
                 },
                 {
                     name: "View All Departments",
-                    value: "VIEW_DEPARTMENT"
+                    value: "VIEW_DEPARTMENTS"
                 },
                 {
                     name: "Add Department",
@@ -82,45 +96,177 @@ function loadPrompts() {
                 viewUtilizedBudgetByDept();
                 break;
             case "QUIT":
+                quit();
                 break;
         }
     })
 }
 
 function viewEmployees() {
-    data.findAllEmployees();
+    data.findAllEmployees().then(function(res) {
+
+        console.table(res[0]);
+        console.log("==================================================================================");
+        loadPrompts();
+    });
+    
 }
 
 function addEmployee() {
 
-    prompt([
+    inquirer.prompt([
         {
             type: "input",
-            name: "firstName",
+            name: "first_name",
             message: "What is the employee's first name?"
         },
         {
             type: "input",
-            name: "lastName",
+            name: "last_name",
             message: "What is the employee's last name?"
         },
         {
-            type: "input",
-            name: "role",
-            message: "What is the employee's role"
+            type: "list",
+            name: "role_id",
+            message: "What is the employee's role",
+            choices: [
+                {
+                    name: "Staff Accountant",
+                    value: 1
+                },
+                {
+                    name: "Controller",
+                    value: 2
+                },
+                {
+                    name: "Engineer",
+                    value: 3
+                },
+                {
+                    name: "Senior Engineer",
+                    value: 4
+                },
+                {
+                    name: "Lawyer",
+                    value: 5
+                },
+                {
+                    name: "Legal Team Lead",
+                    value: 6
+                },
+                {
+                    name: "Operations Manager",
+                    value: 7
+                },
+                {
+                    name: "Sales Associate",
+                    value: 8
+                },
+                {
+                    name: "Sales Lead",
+                    value: 9
+                }
+            ]
         },
         {
-            type: "input",
-            name: "role",
-            message: "Who is the employee's manager?"
+            type: "list",
+            name: "manager_id",
+            message: "Who is the employee's manager?",
+            choices: [
+                {
+                    name: "None",
+                    value: 0
+                },
+                {
+                    name: "Aaron Jones",
+                    value: 1
+                },
+                {
+                    name: "Jim Jones",
+                    value: 2
+                },
+                {
+                    name: "Sam Snyder",
+                    value: 3
+                },
+                {
+                    name: "Jennifer Law",
+                    value: 4
+                },
+                {
+                    name: "Taylor Kelly",
+                    value: 5
+                },
+                {
+                    name: "Kate Johnson",
+                    value: 6
+                },
+                {
+                    name: "Barbara Tate",
+                    value: 7
+                },
+                {
+                    name: "Mike Green",
+                    value: 8
+                },
+                {
+                    name: "Sarah Carr",
+                    value: 9
+                },
+                {
+                    name: "John Brown",
+                    value: 10
+                },
+                {
+                    name: "Casey Keller",
+                    value: 11
+                }
+            ]
         }
     ]).then(res => {
-        
-    })
+       return data.createEmployee(res);
 
-    data.createEmployee();
+    })
+.then(res => {
+    console.log("Added Employee!");
+    loadPrompts();
+})
+    
 }
 
+function updateEmployeeRole() {
+
+}
+
+function viewRoles() {
+    data.findAllRoles().then(function(res) {
+        
+        console.table(res[0]);
+        console.log("==================================================================================");
+        loadPrompts();
+    });
+}
+
+function addRole() {
+
+}
+
+function viewDepartments() {
+    data.findAllDepartments().then(function(res) {
+        
+        console.table(res[0]);
+        console.log("==================================================================================");
+        loadPrompts();
+    });
+}
+
+function addDepartment() {
+
+}
+
+function quit() {
+console.log("Thank you for using Employee Manager!");
+}
 
 
 

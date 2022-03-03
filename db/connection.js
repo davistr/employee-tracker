@@ -1,3 +1,4 @@
+require("dotenv").config();
 // Import mysql
 const mysql = require("mysql2");
 
