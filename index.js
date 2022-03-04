@@ -104,7 +104,7 @@ function loadPrompts() {
 
 function viewEmployees() {
     data.findAllEmployees().then(function(res) {
-
+        console.log("");
         console.table(res[0]);
         console.log("==================================================================================");
         loadPrompts();
@@ -229,6 +229,7 @@ function addEmployee() {
     })
 .then(res => {
     console.log("Added Employee!");
+    console.log("");
     loadPrompts();
 })
     
@@ -236,19 +237,172 @@ function addEmployee() {
 
 function updateEmployeeRole() {
 
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "id",
+            message: "Which employee's role do you want to update?",
+            choices: [
+                {
+                    name: "Aaron Jones",
+                    value: 1
+                },
+                {
+                    name: "Jim Jones",
+                    value: 2
+                },
+                {
+                    name: "Sam Snyder",
+                    value: 3
+                },
+                {
+                    name: "Jennifer Law",
+                    value: 4
+                },
+                {
+                    name: "Taylor Kelly",
+                    value: 5
+                },
+                {
+                    name: "Kate Johnson",
+                    value: 6
+                },
+                {
+                    name: "Barbara Tate",
+                    value: 7
+                },
+                {
+                    name: "Mike Green",
+                    value: 8
+                },
+                {
+                    name: "Sarah Carr",
+                    value: 9
+                },
+                {
+                    name: "John Brown",
+                    value: 10
+                },
+                {
+                    name: "Casey Keller",
+                    value: 11
+                }
+
+            ]
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "Which role do you want to assign the selected employee?",
+            choices: [
+                
+                    {
+                        name: "Staff Accountant",
+                        value: 1
+                    },
+                    {
+                        name: "Controller",
+                        value: 2
+                    },
+                    {
+                        name: "Engineer",
+                        value: 3
+                    },
+                    {
+                        name: "Senior Engineer",
+                        value: 4
+                    },
+                    {
+                        name: "Lawyer",
+                        value: 5
+                    },
+                    {
+                        name: "Legal Team Lead",
+                        value: 6
+                    },
+                    {
+                        name: "Operations Manager",
+                        value: 7
+                    },
+                    {
+                        name: "Sales Associate",
+                        value: 8
+                    },
+                    {
+                        name: "Sales Lead",
+                        value: 9
+                    }
+            ]
+        }
+    ]).then(res => {
+        return data.updateEmployeeRole(res);
+    })
+    .then(res => {
+        console.log("Updated employee role!");
+        console.log("");
+        loadPrompts();
+    })
 }
 
 function viewRoles() {
     data.findAllRoles().then(function(res) {
-        
+        console.log("");
         console.table(res[0]);
         console.log("==================================================================================");
+        console.log("");
         loadPrompts();
     });
 }
 
 function addRole() {
 
+    inquirer.prompt([
+    {
+        type: "input",
+        name: "title",
+        message: "What is the job title to be added?"
+    },
+    {
+        type: "input",
+        name: "salary",
+        message: "What is the salary for this role?"
+    },
+    {
+        type: "list",
+        name: "department_id",
+        message: "What department will this role be in?",
+        choices: [
+            {
+                name: "Accounting",
+                value: 1
+            },
+            {
+                name: "Engineering",
+                value: 2
+            },
+            {
+                name: "Legal",
+                value: 3
+            },
+            {
+                name: "Operations",
+                value: 4
+            },
+            {
+                name: "Sales",
+                value: 5
+            }
+        ]
+    }
+    ]).then(res => {
+        return data.createRole(res);
+ 
+     })
+ .then(res => {
+     console.log("Added role!");
+     console.log("");
+     loadPrompts();
+ })
 }
 
 function viewDepartments() {
@@ -262,6 +416,20 @@ function viewDepartments() {
 
 function addDepartment() {
 
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "department_name",
+            message: "What is the department to be added?"
+        }
+    ]).then(res => {
+        return data.createDepartment(res);
+    })
+    .then(res => {
+        console.log("Added department!");
+     console.log("");
+     loadPrompts();
+    })
 }
 
 function quit() {

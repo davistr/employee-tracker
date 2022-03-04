@@ -37,6 +37,9 @@ class Data {
         return this.connection.promise().query("INSERT INTO job_role SET ?", role);
     }
 
+    createDepartment(department) {
+        return this.connection.promise().query("INSERT INTO department SET ?", department);
+    }
 
 }
 
