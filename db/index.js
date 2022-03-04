@@ -18,7 +18,7 @@ class Data {
         return this.connection.promise().query("INSERT INTO employee SET ?", employee);
     }
     // remove employee
-    removeEmployee(employeeId) {
+    deleteEmployee(employeeId) {
         return this.connection.promise().query("DELETE FROM employee WHERE id = ?", employeeId);
     }
     // update current employee role
@@ -31,7 +31,7 @@ class Data {
     }
     // display all departments
     findAllDepartments() {
-        return this.connection.promise().query("SELECT department_name FROM department");
+        return this.connection.promise().query("SELECT department_name, department.id FROM department");
     }
     // create new role
     createRole(role) {

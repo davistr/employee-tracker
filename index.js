@@ -5,15 +5,16 @@ require("console.table");
 
 const logo = require('asciiart-logo');
 const connection = require('./db/connection');
+// throw error if connection cannot be made
 connection.connect(err => {
     if (err) throw err
     init();
 });
 
-
+// Initialize application
 function init() {
     const logoText = logo ({
-        name: "Employee Manager",
+        name: "Employee Tracker",
         borderColor: "grey",
         logoColor: "blue"
     }).render();
@@ -40,6 +41,10 @@ function loadPrompts() {
                 {
                     name: "Update Employee Role",
                     value: "UPDATE_EMPLOYEE_ROLE"
+                },
+                {
+                    name: "Remove Employee",
+                    value: "REMOVE_EMPLOYEE"
                 },
                 {
                     name: "View All Roles",
@@ -79,6 +84,9 @@ function loadPrompts() {
                 break;
             case "UPDATE_EMPLOYEE_ROLE":
                 updateEmployeeRole();
+                break;
+            case "REMOVE_EMPLOYEE":
+                removeEmployee();
                 break;
             case "VIEW_ROLES":
                 viewRoles();
@@ -224,10 +232,10 @@ function addEmployee() {
        return data.createEmployee(res);
 
     })
-.then(res => {
-    console.log("Added Employee!");
-    console.log("");
-    loadPrompts();
+    .then(res => {
+        console.log("Added employee!");
+        console.log("");
+        loadPrompts();
 })
     
 }
@@ -343,6 +351,70 @@ function updateEmployeeRole() {
     })
 }
 
+function removeEmployee() {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "id",
+            message: "Which employee do you want to remove?",
+            choices: [
+                {
+                    name: "Aaron Jones",
+                    value: 1
+                },
+                {
+                    name: "Jim Jones",
+                    value: 2
+                },
+                {
+                    name: "Sam Snyder",
+                    value: 3
+                },
+                {
+                    name: "Jennifer Law",
+                    value: 4
+                },
+                {
+                    name: "Taylor Kelly",
+                    value: 5
+                },
+                {
+                    name: "Kate Johnson",
+                    value: 6
+                },
+                {
+                    name: "Barbara Tate",
+                    value: 7
+                },
+                {
+                    name: "Mike Green",
+                    value: 8
+                },
+                {
+                    name: "Sarah Carr",
+                    value: 9
+                },
+                {
+                    name: "John Brown",
+                    value: 10
+                },
+                {
+                    name: "Casey Keller",
+                    value: 11
+                }
+            ]
+        }
+    ]).then(res => {
+        return data.deleteEmployee(res.id);
+
+    })
+    .then(res => {
+        console.log("Removed employee!");
+        console.log("");
+        loadPrompts();
+    })
+}
+
 function viewRoles() {
     data.findAllRoles().then(function(res) {
         console.log("");
@@ -406,7 +478,7 @@ function addRole() {
 
 function viewDepartments() {
     data.findAllDepartments().then(function(res) {
-        
+        console.log("");
         console.table(res[0]);
         console.log("==================================================================================");
         loadPrompts();
@@ -414,7 +486,7 @@ function viewDepartments() {
 }
 
 function addDepartment() {
-
+    // prompt for department
     inquirer.prompt([
         {
             type: "input",
@@ -432,7 +504,7 @@ function addDepartment() {
 }
 
 function quit() {
-console.log("Thank you for using Employee Manager!");
+console.log("Thank you for using Employee Tracker!");
 }
 
 
