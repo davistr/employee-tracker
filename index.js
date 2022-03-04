@@ -1,10 +1,11 @@
+// import required folders/packages
 const inquirer = require("inquirer");
 const data = require("./db");
 require("console.table");
-
-
 const logo = require('asciiart-logo');
 const connection = require('./db/connection');
+
+
 // throw error if connection cannot be made
 connection.connect(err => {
     if (err) throw err
@@ -16,7 +17,8 @@ function init() {
     const logoText = logo ({
         name: "Employee Tracker",
         borderColor: "grey",
-        logoColor: "blue"
+        logoColor: "blue",
+        font: "ANSI Shadow"
     }).render();
     console.log(logoText);
 
@@ -61,10 +63,6 @@ function loadPrompts() {
                 {
                     name: "Add Department",
                     value: "ADD_DEPARTMENT"
-                },
-                {
-                    name: "View Total Utilized Budget By Department",
-                    value: "VIEW_UTILIZED_BUDGET_BY_DEPARTMENT"
                 },
                 {
                     name: "Quit",
