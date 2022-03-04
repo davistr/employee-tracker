@@ -92,9 +92,6 @@ function loadPrompts() {
             case "ADD_DEPARTMENT":
                 addDepartment();
                 break;
-            case "VIEW_UTILIZED_BUDGET_BY_DEPARTMENT":
-                viewUtilizedBudgetByDept();
-                break;
             case "QUIT":
                 quit();
                 break;
@@ -335,7 +332,9 @@ function updateEmployeeRole() {
             ]
         }
     ]).then(res => {
-        return data.updateEmployeeRole(res);
+        console.log(res);
+        return data.updateEmployeeRole(res.id, res.role_id);
+        
     })
     .then(res => {
         console.log("Updated employee role!");
