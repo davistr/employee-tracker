@@ -4,7 +4,7 @@
 
 ## Description
 
-This project is designed to be a content management system that allows a particular organization to CRUD employee information.
+This project is designed to be a content management system (CMS) that allows a particular organization to complete CRUD actions and manage their employee database.
 
 ## Table of Contents
 
@@ -17,6 +17,8 @@ This project is designed to be a content management system that allows a particu
 - [Contributing](#contributing)
 
 - [Tests](#tests)
+
+- [Screenshot](#screenshot)
 
 - [Questions](#questions)
 
@@ -43,6 +45,10 @@ Feel free to contribute!
 To run tests, run the below command:
 
     npm test
+
+## Screenshot
+
+![](images/screenshot.jpg)
 
 ## Demo Video Link:
 
